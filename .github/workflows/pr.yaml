@@ -1,0 +1,15 @@
+name: Pull Requests
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  pull-request:
+    name: PR
+    uses: nsklikas/observability/.github/workflows/charm-pull-request.yaml@main
+    secrets: inherit
+    with:
+      ip-range-start: 10.64.140.43
+      ip-range-end: 10.64.140.46
