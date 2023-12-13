@@ -1,0 +1,48 @@
+syntax = "proto3";
+
+package dummy.v1;
+
+import "google/api/annotations.proto";
+import "google/api/field_behavior.proto";
+import "google/api/visibility.proto";
+import "google/protobuf/struct.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/wrappers.proto";
+import "dummy/v1/dummy.proto";
+import "protoc-gen-openapiv2/options/annotations.proto";
+import "validate/validate.proto";
+
+
+
+service DummyService {
+  rpc Echo(EchoMessage) returns (EchoMessage) {
+    option (google.api.http) = {
+      post: "/v1/echo"
+      body: "*"
+    };
+
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "Simple echo endpoint"
+      tags: ["Dummy Echo"]
+      operation_id: "Echo"
+      description:
+        "The Echo API will simply return whatever u pass.\n"
+        "In the body:\n"
+        "1. `value` is mandatory. It can be a loooooong string, no spaces "
+        "allowed.\n"
+        "## Examples\n"
+        "### Echo some random garbage\n"
+        "```json\n"
+        "{\n"
+        " \"value\": \"boblikesicecreambuticecreamdoesntlikebob\"\n"
+        "}\n"
+        "```\n"
+        "The API will return the same, something like\n"
+        "```json\n"
+        "{\n"
+        " \"value\": \"boblikesicecreambuticecreamdoesntlikebob\"\n"
+        "}\n"
+        "```\n"
+    };
+  }
+}

@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package dummy.v1;
+
+import "google/api/field_behavior.proto";
+import "google/protobuf/struct.proto";
+import "google/protobuf/timestamp.proto";
+import "protoc-gen-openapiv2/options/annotations.proto";
+import "validate/validate.proto";
+
+
+message EchoMessage {
+ string value = 1 [
+    (validate.rules).string = {
+      pattern: "^[^:#@\\s]{1,254}$",
+      ignore_empty: false
+    },
+    (google.api.field_behavior) = REQUIRED,
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {example: "\"somethingfunnybutnottoolong\""}
+  ];
+}
