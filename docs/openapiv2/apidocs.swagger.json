@@ -1,0 +1,252 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "dummy",
+    "description": "A dummy test",
+    "version": "0.1",
+    "contact": {
+      "name": "Dummy",
+      "url": "https://shipperizer.github.io/ubiquitous-succotash",
+      "email": "admin@shipperizer.org"
+    },
+    "license": {
+      "name": "Apache-2.0",
+      "url": "https://github.com/shipperizer/ubiquitous-succotash/blob/main/LICENSE"
+    }
+  },
+  "tags": [
+    {
+      "name": "DummyService"
+    }
+  ],
+  "schemes": [
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/echo": {
+      "post": {
+        "summary": "Simple echo endpoint",
+        "description": "The Echo API will simply return whatever u pass.\nIn the body:\n1. `value` is mandatory. It can be a loooooong string, no spaces allowed.\n## Examples\n### Echo some random garbage\n```json\n{\n \"value\": \"boblikesicecreambuticecreamdoesntlikebob\"\n}\n```\nThe API will return the same, something like\n```json\n{\n \"value\": \"boblikesicecreambuticecreamdoesntlikebob\"\n}\n```\n",
+        "operationId": "Echo",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/EchoMessage"
+            }
+          },
+          "400": {
+            "description": "Request failed due to invalid input.",
+            "schema": {
+              "$ref": "#/definitions/ValidationErrorMessageResponse"
+            }
+          },
+          "404": {
+            "description": "Request failed due to incorrect path.",
+            "schema": {
+              "$ref": "#/definitions/PathUnknownErrorMessageResponse"
+            }
+          },
+          "500": {
+            "description": "Request failed due to internal server error.",
+            "schema": {
+              "$ref": "#/definitions/InternalErrorMessageResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/Status"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/EchoMessage"
+            }
+          }
+        ],
+        "tags": [
+          "Dummy Echo"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "Any": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "EchoMessage": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "type": "string",
+          "example": "somethingfunnybutnottoolong"
+        }
+      },
+      "required": [
+        "value"
+      ]
+    },
+    "ErrorCode": {
+      "type": "string",
+      "enum": [
+        "no_error",
+        "validation_error",
+        "authorization_model_not_found",
+        "authorization_model_resolution_too_complex",
+        "invalid_write_input",
+        "cannot_allow_duplicate_tuples_in_one_request",
+        "cannot_allow_duplicate_types_in_one_request",
+        "cannot_allow_multiple_references_to_one_relation",
+        "invalid_continuation_token",
+        "invalid_tuple_set",
+        "invalid_check_input",
+        "invalid_expand_input",
+        "unsupported_user_set",
+        "invalid_object_format",
+        "write_failed_due_to_invalid_input",
+        "authorization_model_assertions_not_found",
+        "latest_authorization_model_not_found",
+        "type_not_found",
+        "relation_not_found",
+        "empty_relation_definition",
+        "invalid_user",
+        "invalid_tuple",
+        "unknown_relation",
+        "store_id_invalid_length",
+        "assertions_too_many_items",
+        "id_too_long",
+        "authorization_model_id_too_long",
+        "tuple_key_value_not_specified",
+        "tuple_keys_too_many_or_too_few_items",
+        "page_size_invalid",
+        "param_missing_value",
+        "difference_base_missing_value",
+        "subtract_base_missing_value",
+        "object_too_long",
+        "relation_too_long",
+        "type_definitions_too_few_items",
+        "type_invalid_length",
+        "type_invalid_pattern",
+        "relations_too_few_items",
+        "relations_too_long",
+        "relations_invalid_pattern",
+        "object_invalid_pattern",
+        "query_string_type_continuation_token_mismatch",
+        "exceeded_entity_limit",
+        "invalid_contextual_tuple",
+        "duplicate_contextual_tuple",
+        "invalid_authorization_model",
+        "unsupported_schema_version"
+      ],
+      "default": "no_error"
+    },
+    "InternalErrorCode": {
+      "type": "string",
+      "enum": [
+        "no_internal_error",
+        "internal_error",
+        "cancelled",
+        "deadline_exceeded",
+        "already_exists",
+        "resource_exhausted",
+        "failed_precondition",
+        "aborted",
+        "out_of_range",
+        "unavailable",
+        "data_loss"
+      ],
+      "default": "no_internal_error"
+    },
+    "InternalErrorMessageResponse": {
+      "type": "object",
+      "example": {
+        "code": "internal_error",
+        "message": "Internal Server Error"
+      },
+      "properties": {
+        "code": {
+          "$ref": "#/definitions/InternalErrorCode"
+        },
+        "message": {
+          "type": "string"
+        }
+      }
+    },
+    "NotFoundErrorCode": {
+      "type": "string",
+      "enum": [
+        "no_not_found_error",
+        "undefined_endpoint",
+        "store_id_not_found",
+        "unimplemented"
+      ],
+      "default": "no_not_found_error"
+    },
+    "PathUnknownErrorMessageResponse": {
+      "type": "object",
+      "example": {
+        "code": "undefined_endpoint",
+        "message": "Endpoint not enabled"
+      },
+      "properties": {
+        "code": {
+          "$ref": "#/definitions/NotFoundErrorCode"
+        },
+        "message": {
+          "type": "string"
+        }
+      }
+    },
+    "Status": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Any"
+          }
+        }
+      }
+    },
+    "ValidationErrorMessageResponse": {
+      "type": "object",
+      "example": {
+        "code": "validation_error",
+        "message": "Generic validation error"
+      },
+      "properties": {
+        "code": {
+          "$ref": "#/definitions/ErrorCode"
+        },
+        "message": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
