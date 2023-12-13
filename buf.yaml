@@ -1,0 +1,18 @@
+version: v1
+name: buf.build/shipperizer/ubiquitous-succotash
+deps:
+  - buf.build/envoyproxy/protoc-gen-validate
+  - buf.build/grpc-ecosystem/grpc-gateway
+  - buf.build/googleapis/googleapis
+breaking:
+  ignore_unstable_packages: true
+
+lint:
+  allow_comment_ignores: true
+  ignore_only:
+    ENUM_VALUE_UPPER_SNAKE_CASE:
+      - dummy/v1/errors_ignore.proto
+    ENUM_VALUE_PREFIX:
+      - dummy/v1/errors_ignore.proto
+    ENUM_ZERO_VALUE_SUFFIX:
+      - dummy/v1/errors_ignore.proto
